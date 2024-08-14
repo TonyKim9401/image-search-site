@@ -1,4 +1,5 @@
 import CommonHeader from '@/components/common/header/CommonHeader'
+import CommonSearchBar from '@/components/common/searchBar/CommonSearchBar'
 import styles from './styles/index.module.scss'
 
 function index() {
@@ -16,6 +17,7 @@ function index() {
                         We accept contributions from creators in all regions
                     </span>
                     {/* Search bar UI part */}
+                    <CommonSearchBar />
                 </div>
             </div>
             <div className={styles.page__contents__imageBox}>
