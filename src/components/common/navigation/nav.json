@@ -1,0 +1,86 @@
+[
+  {
+    "index": 0,
+    "path": "/edit",
+    "label": "Press/Editorial",
+    "searchValue": "edit",
+    "isActive": false
+  },
+  {
+    "index": 1,
+    "path": "/following",
+    "label": "following",
+    "searchValue": "following",
+    "isActive": false
+  },
+  {
+    "index": 2,
+    "path": "/photoPlus",
+    "label": "Unsplash Photo+",
+    "searchValue": "photo",
+    "isActive": false
+  },
+  {
+    "index": 3,
+    "path": "/oneColor",
+    "label": "oneColor",
+    "searchValue": "one color",
+    "isActive": false
+  },
+  {
+    "index": 4,
+    "path": "/3dRender",
+    "label": "3d rendering",
+    "searchValue": "3d rendering",
+    "isActive": false
+  },
+  {
+    "index": 5,
+    "path": "/nature",
+    "label": "nature",
+    "searchValue": "nature",
+    "isActive": false
+  },
+  {
+    "index": 6,
+    "path": "/textures",
+    "label": "textures and patterns",
+    "searchValue": "texture",
+    "isActive": false
+  },
+  {
+    "index": 7,
+    "path": "/interior",
+    "label": "interior",
+    "searchValue": "interior",
+    "isActive": false
+  },
+  {
+    "index": 8,
+    "path": "/film",
+    "label": "film",
+    "searchValue": "film",
+    "isActive": false
+  },
+  {
+    "index": 9,
+    "path": "/experimental",
+    "label": "experimental",
+    "searchValue": "experimental",
+    "isActive": false
+  },
+  {
+    "index": 10,
+    "path": "/travel",
+    "label": "travel",
+    "searchValue": "travel",
+    "isActive": false
+  },
+  {
+    "index": 11,
+    "path": "/sports",
+    "label": "sports",
+    "searchValue": "sports",
+    "isActive": false
+  }
+]
