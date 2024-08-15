@@ -4,6 +4,7 @@ import CommonHeader from "@/components/common/header/CommonHeader";
 import CommonSearchBar from "@/components/common/searchBar/CommonSearchBar";
 import CommonFooter from "@/components/common/footer/CommonFooter";
 import Card from "./components/Card";
+import DetailDialog from "@/components/common/dialog/DetailDialog";
 import upsplashData from "./unsplashConfiguration.json";
 
 //CSS
@@ -15,9 +16,10 @@ import { useRecoilValue } from "recoil";
 function index() {
   const imgSelector = useRecoilValue(imageData);
   const [imgData, setImgData] = useState<CardDTO[]>([]);
+  const [open, setOpen] = useState<boolean>(false); // image detail dialog management state
 
   const CARD_LIST = imgSelector.data.results.map((card: CardDTO) => {
-    return <Card data={card} key={card.id} />;
+    return <Card data={card} key={card.id} handleDialog={setOpen} />;
   });
 
   return (
@@ -41,6 +43,7 @@ function index() {
         <div className={styles.page__contents__imageBox}>{CARD_LIST}</div>
         {/* Common Footer UI part */}
         <CommonFooter />
+        {open && <DetailDialog />}
       </div>
     </div>
   );
