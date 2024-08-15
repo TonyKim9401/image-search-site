@@ -23,3 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 src/pages/index/unsplashConfiguration.json
+src/recoil/selectors/unsplashConfiguration.json
