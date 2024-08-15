@@ -15,11 +15,18 @@ import { useRecoilValue } from "recoil";
 
 function index() {
   const imgSelector = useRecoilValue(imageData);
-  const [imgData, setImgData] = useState<CardDTO[]>([]);
+  const [imgData, setImgData] = useState<CardDTO>();
   const [open, setOpen] = useState<boolean>(false); // image detail dialog management state
 
   const CARD_LIST = imgSelector.data.results.map((card: CardDTO) => {
-    return <Card data={card} key={card.id} handleDialog={setOpen} />;
+    return (
+      <Card
+        data={card}
+        key={card.id}
+        handleDialog={setOpen}
+        handleSetData={setImgData}
+      />
+    );
   });
 
   return (
@@ -43,7 +50,7 @@ function index() {
         <div className={styles.page__contents__imageBox}>{CARD_LIST}</div>
         {/* Common Footer UI part */}
         <CommonFooter />
-        {open && <DetailDialog />}
+        {open && <DetailDialog data={imgData} handleDialog={setOpen} />}
       </div>
     </div>
   );
