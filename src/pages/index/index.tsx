@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import CommonNav from "@/components/common/navigation/CommonNav";
 import CommonHeader from "@/components/common/header/CommonHeader";
 import CommonSearchBar from "@/components/common/searchBar/CommonSearchBar";
@@ -11,23 +11,30 @@ import upsplashData from "./unsplashConfiguration.json";
 import styles from "./styles/index.module.scss";
 import { CardDTO } from "./types/card";
 import { imageData } from "@/recoil/selectors/imageSelectors";
-import { useRecoilValue } from "recoil";
+import { useRecoilValueLoadable } from "recoil";
 
 function index() {
-  const imgSelector = useRecoilValue(imageData);
+  const imgSelector = useRecoilValueLoadable(imageData);
   const [imgData, setImgData] = useState<CardDTO>();
   const [open, setOpen] = useState<boolean>(false); // image detail dialog management state
 
-  const CARD_LIST = imgSelector.data.results.map((card: CardDTO) => {
-    return (
-      <Card
-        data={card}
-        key={card.id}
-        handleDialog={setOpen}
-        handleSetData={setImgData}
-      />
-    );
-  });
+  const CARD_LIST = useMemo(() => {
+    if (imgSelector.state === "hasValue") {
+      const result = imgSelector.contents.map((card: CardDTO) => {
+        return (
+          <Card
+            data={card}
+            key={card.id}
+            handleDialog={setOpen}
+            handleSetData={setImgData}
+          />
+        );
+      });
+      return result;
+    } else {
+      return <div>loading...</div>;
+    }
+  }, [imgSelector]);
 
   return (
     <div className={styles.page}>
