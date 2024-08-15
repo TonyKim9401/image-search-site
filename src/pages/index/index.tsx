@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import CommonNav from "@/components/common/navigation/CommonNav";
 import CommonHeader from "@/components/common/header/CommonHeader";
 import CommonSearchBar from "@/components/common/searchBar/CommonSearchBar";
@@ -8,9 +9,10 @@ import upsplashData from "./unsplashConfiguration.json";
 //CSS
 import styles from "./styles/index.module.scss";
 import axios from "axios";
-import { useEffect } from "react";
+import { CardDTO } from "./types/card";
 
 function index() {
+  const [imgUrls, setImgUrls] = useState([]);
   const getData = async () => {
     // Calling open API
     const API_URL = upsplashData.API_URL;
@@ -26,10 +28,17 @@ function index() {
         `${API_URL}?query=${searchValue}&client_id=${API_KEY}&page=${pageValue}&per_page=${PER_PAGE}`
       );
       console.log(res);
+      if (res.status === 200) {
+        setImgUrls(res.data.results);
+      }
     } catch (err) {
       console.log(err);
     }
   };
+
+  const cardList = imgUrls.map((card: CardDTO) => {
+    return <Card data={card} key={card.id} />;
+  });
 
   useEffect(() => {
     getData();
@@ -53,11 +62,7 @@ function index() {
             <CommonSearchBar />
           </div>
         </div>
-        <div className={styles.page__contents__imageBox}>
-          <Card />
-          <Card />
-          <Card />
-        </div>
+        <div className={styles.page__contents__imageBox}>{cardList}</div>
         {/* Common Footer UI part */}
         <CommonFooter />
       </div>
