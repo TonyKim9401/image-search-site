@@ -6,6 +6,7 @@ import CommonFooter from "@/components/common/footer/CommonFooter";
 import Card from "./components/Card";
 import DetailDialog from "@/components/common/dialog/DetailDialog";
 import upsplashData from "./unsplashConfiguration.json";
+import Loading from "./components/Loading";
 
 //CSS
 import styles from "./styles/index.module.scss";
@@ -32,7 +33,7 @@ function index() {
       });
       return result;
     } else {
-      return <div>loading...</div>;
+      return <Loading />;
     }
   }, [imgSelector]);
 
