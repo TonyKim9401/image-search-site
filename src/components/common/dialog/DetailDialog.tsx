@@ -1,5 +1,9 @@
 import { CardDTO, Tag } from "@/pages/index/types/card";
 import styles from "./DetailDialog.module.scss";
+import { useEffect, useState } from "react";
+import toast, { toastConfig } from "react-simple-toasts";
+import "react-simple-toasts/dist/theme/dark.css";
+toastConfig({ theme: "dark" });
 
 interface Props {
   data: CardDTO;
@@ -10,6 +14,42 @@ function DetailDialog({ data, handleDialog }: Props) {
   const closeDialog = () => {
     handleDialog(false);
   };
+
+  const [bookmark, setBookmark] = useState(false);
+
+  const getLocalStorage = JSON.parse(localStorage.getItem("bookmark"));
+  const addBookmark = (selected: CardDTO) => {
+    setBookmark(true);
+
+    // 1. save data to the local storage
+    if (!getLocalStorage || getLocalStorage === null) {
+      localStorage.setItem("bookmark", JSON.stringify([selected]));
+      toast("The image is saved in bookmark. 📕");
+    } else {
+      // 2. if the image is already exist in the local storage
+      if (
+        getLocalStorage.findIndex((item: CardDTO) => item.id === selected.id) >
+        -1
+      ) {
+        toast("The image is already exist in bookmark. ❌");
+      } else {
+        // 3. if the image doesn't exist in the local storage + any data already exists in the local storage
+        const res = [...getLocalStorage];
+        res.push(selected);
+        localStorage.setItem("bookmark", JSON.stringify(res));
+        toast("The image is saved in bookmark. 📕");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (
+      getLocalStorage &&
+      getLocalStorage.findIndex((item: CardDTO) => item.id === data.id) > -1
+    ) {
+      setBookmark(true);
+    } else if (!getLocalStorage) return;
+  });
 
   return (
     <div className={styles.container}>
@@ -33,13 +73,25 @@ function DetailDialog({ data, handleDialog }: Props) {
             <span className={styles.close__authorName}>{data.user.name}</span>
           </div>
           <div className={styles.bookmark}>
-            <button className={styles.bookmark__button}>
-              <span
-                className="material-symbols-outlined"
-                style={{ fontSize: 16 + "px" }}
-              >
-                favorite
-              </span>
+            <button
+              className={styles.bookmark__button}
+              onClick={() => addBookmark(data)}
+            >
+              {bookmark === false ? (
+                <span
+                  className="material-symbols-outlined"
+                  style={{ fontSize: 16 + "px" }}
+                >
+                  favorite
+                </span>
+              ) : (
+                <span
+                  className="material-symbols-outlined"
+                  style={{ fontSize: 16 + "px", color: "red" }}
+                >
+                  favorite
+                </span>
+              )}
               Book mark
             </button>
             <button className={styles.bookmark__button}>Download</button>
