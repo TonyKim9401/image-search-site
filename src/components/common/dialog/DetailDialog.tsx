@@ -49,7 +49,16 @@ function DetailDialog({ data, handleDialog }: Props) {
     ) {
       setBookmark(true);
     } else if (!getLocalStorage) return;
-  });
+
+    // Close dialog when 'ESC' key down
+    const escKeyDownCloseDialog = (event: any) => {
+      if (event.key === "Escape") {
+        closeDialog();
+      }
+    };
+    window.addEventListener("keydown", escKeyDownCloseDialog);
+    return () => window.removeEventListener("keydown", escKeyDownCloseDialog);
+  }, []);
 
   return (
     <div className={styles.container}>
